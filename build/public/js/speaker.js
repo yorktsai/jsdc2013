@@ -6,7 +6,7 @@
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   setStatus = function(msg) {
-    return $("#status").html("Connection Status : " + msg);
+    return $("#status").html(msg);
   };
 
   SlideModel = (function(_super) {

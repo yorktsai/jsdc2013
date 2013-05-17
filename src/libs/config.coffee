@@ -5,4 +5,5 @@
         host: 'localhost'
         port: '6379'
         channel: 'jsdc:jsdc'
+        msgList: 'jsdc:msgs'
 ) (if typeof exports is "undefined" then this["config"] = {} else exports)

@@ -5,6 +5,7 @@ server = require("http").createServer(app)
 io = require("socket.io").listen(server)
 redis = require("redis")
 config = require('./libs/config')
+moment = require('moment');
 
 # routing
 require('./libs/routes').config(app, __dirname)
@@ -20,9 +21,18 @@ redisClient = redis.createClient(config.redis.port, config.redis.host)
 redisPublishClient = redis.createClient(config.redis.port, config.redis.host)
 
 # socket.io
+connectCounter = 0
 io.sockets.on "connection", (socket) ->
     #on connect send a welcome message
     console.log('welcome');
+
+    socket.on 'connect', () ->
+        connectCounter++
+        # TODO: put connect counter in REDIS
+
+    socket.on 'disconnect', () ->
+        connectCounter--
+        # TODO: put connect counter in REDIS
 
     #on subscription request joins specified room
     #later messages are broadcasted on the rooms
@@ -31,7 +41,30 @@ io.sockets.on "connection", (socket) ->
 
         # send buffered messages
         if data.channel is 'chat'
-            # TODO: get recent x messages and send to client
+            # get recent x messages and send to client
+            n = 5
+            redisPublishClient.llen config.redis.msgList, (err, res) ->
+                endIndex = res
+                startIndex = Math.max(endIndex - n, 0)
+
+                console.log(startIndex)
+
+                redisPublishClient.lrange config.redis.msgList, startIndex, endIndex, (err, res) ->
+                    counter = 0
+                    for json in res
+                        data = JSON.parse(json)
+                        data.id = startIndex + counter
+
+                        if data.ts?
+                            data.ts = moment.unix(data.ts).format('HH:mm:ss YYYY-MM-DD')
+
+                        counter++
+
+                        redisPublishClient.publish config.redis.channel, JSON.stringify({
+                            channel: 'chat'
+                            data: data
+                        })
+
         else if data.channel is 'slide'
             # send recent slide to client
             if slideBuffer?
@@ -58,14 +91,19 @@ io.sockets.on "connection", (socket) ->
         if not data.msg?
             return
 
-        console.log('[chat] ' + data);
+        data.ts = moment().unix()
 
-        # TODO bg color and id
+        console.log('[chat] ' + JSON.stringify(data));
 
-        redisPublishClient.publish config.redis.channel, JSON.stringify({
-            channel: 'chat'
-            data: data
-        })
+        # add to list
+        redisPublishClient.rpush config.redis.msgList, JSON.stringify(data), (err, res) ->
+            # pub
+            data.id = index
+            data.ts = moment.unix(data.ts).format('HH:mm:ss YYYY-MM-DD')
+            redisPublishClient.publish config.redis.channel, JSON.stringify({
+                channel: 'chat'
+                data: data
+            })
         
 # setup redis clients
 redisClient.on "ready", ->

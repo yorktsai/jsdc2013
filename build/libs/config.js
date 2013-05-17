@@ -7,7 +7,8 @@
     return exports.redis = {
       host: 'localhost',
       port: '6379',
-      channel: 'jsdc:jsdc'
+      channel: 'jsdc:jsdc',
+      msgList: 'jsdc:msgs'
     };
   })((typeof exports === "undefined" ? this["config"] = {} : exports));
 

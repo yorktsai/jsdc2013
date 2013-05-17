@@ -1,6 +1,6 @@
 # status bar, TODO: use backbone
 setStatus = (msg) ->
-    $("#status").html "Connection Status : " + msg
+    $("#status").html msg
 
 class SlideModel extends Backbone.Model
 
@@ -36,6 +36,8 @@ class ChatView extends Backbone.View
 
     render: () =>
         msgs = @model.get("msgs")
+
+        # TODO: decorate msgs
 
         template = $('#template-msgs').html()
         html = Mustache.render(template, {

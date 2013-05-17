@@ -45,34 +45,37 @@
 
             <hr />
 
+            <div class="row-fluid">
+                <div class="span12">
+                    <a href="http://york.tw/jsdc2013" target="_blank">http://york.tw/jsdc2013</a>
+                </div>
+            </div>
+
             <div class="row-fluid" id="chat-div">
                 <div class="span12">
                     <div class="row-fluid">
-                        <div class="span12">
+                        <div class="span10">
                             <form class="form-inline">
                                 <input type="text" name="msg" class="input-xxlarge" placeholder="message">
                                 <input type="submit" class="btn" value="Send"/>
                             </form>
                         </div>
+
+                        <div class="span2" id="status"></div>
                     </div>
 
-                    <div class="msgs"></div>
-                </div>
-            </div>
-
-            <hr />
-
-            <div class="row-fluid">
-                <div class="span12">
-                    <div id="status"></div>
+                    <div class="row-fluid">
+                        <div class="span12 msgs"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <script id="template-msgs" type="template/mustache">
             {{#msgs}}
-                <div style="background-color:{{bgcolor}};" data-id="{{id}}">
-                    {{msg}}
+                <div class=".msg" style="background-color:#F5F5F5;" data-id="{{id}}">
+                    <u>Anonymous</u> ({{ts}}):<br />
+                    <div style="margin-left:10px;">{{msg}}</div>
                 </div>
             {{/msgs}}
         </script>

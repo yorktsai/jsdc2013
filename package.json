@@ -18,7 +18,8 @@
     "redis" :  "0.8.x",
     "socket.io" :  "0.9.x",
     "underscore"    :  "1.4.x",
-    "coffee-script"    :  "1.4.0"
+    "coffee-script"    :  "1.4.0",
+    "moment": "2.0.x"
   },
   "license": "MIT",
   "engines": {
