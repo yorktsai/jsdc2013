@@ -13,10 +13,8 @@ require('./libs/routes').config(app, __dirname)
 server.listen config.port
 
 # message buffer
-messageBuffer = require('./libs/messageBuffer')
-generalBuffer = []
+slideBuffer = undefined
 
-# init redis clients
 # redis clients
 redisClient = redis.createClient(config.redis.port, config.redis.host)
 redisPublishClient = redis.createClient(config.redis.port, config.redis.host)
@@ -29,22 +27,35 @@ io.sockets.on "connection", (socket) ->
     #on subscription request joins specified room
     #later messages are broadcasted on the rooms
     socket.on "subscribe", (data) ->
-        console.log('subscribe: ' + data.channel);
-        socket.join data.channel
+        console.log('[subscribe] ' + data.channel);
 
         # send buffered messages
-        if data.channel is 'message'
-            messages = messageBuffer.getAll()
-            for message in messages
-                socket.emit('message', message)
-        else if generalBuffer[data.channel]?
-            socket.emit('message', generalBuffer[data.channel])
+        if data.channel is 'chat'
+            # TODO: get recent x messages and send to client
+        else if data.channel is 'slide'
+            # send recent slide to client
+            if slideBuffer?
+                socket.emit data.channel, slideBuffer
+        else
+            # invalid channel
+            return
 
-    socket.on "message", (data) ->
-        console.log('message: ' + data.channel);
-        redisPublishClient.publish config.redis.channel, JSON.stringify(data)
+        # join the room
+        socket.join data.channel
+
+    socket.on "slide", (data) ->
+        redisPublishClient.publish config.redis.channel, JSON.stringify({
+            channel: 'slide'
+            data: data
+        })
+
+    socket.on "chat", (data) ->
+        console.log('[chat] ' + data.msg);
+        redisPublishClient.publish config.redis.channel, JSON.stringify({
+            channel: 'chat'
+            data: data
+        })
         
-
 # setup redis clients
 redisClient.on "ready", ->
     redisClient.subscribe config.redis.channel
@@ -52,10 +63,24 @@ redisClient.on "ready", ->
 redisClient.on "message", (channel, message) ->
     # console.log(message);
     data = JSON.parse(message)
-    io.sockets.in(data.channel).emit('message', data);
+    if not data.channel?
+        # invalid message
+        return
 
-    if data.channel is 'message'
-        messageBuffer.append(data)
-    else
-        generalBuffer[data.channel] = data
+    # cache message
+    if data.channel is 'chat'
+        # check format
+        if not data.data.msg?
+            return
+
+        # TODO: buffer
+    else if data.channel is 'slide'
+        # check format
+        if not data.data.id?
+            return
+
+        slideBuffer = data.data
+
+    # broadcast message
+    io.sockets.in(data.channel).emit(data.channel, data.data);
 
