@@ -197,7 +197,7 @@
         id = slideModel.get('id');
         id = id + diff;
         if (id < numSlides && id >= 0) {
-          return socket.emit('slide', {
+          return socket.emit('admin-slide', {
             channel: 'slide',
             id: id
           });

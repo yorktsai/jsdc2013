@@ -71,7 +71,7 @@
       }
       return socket.join(data.channel);
     });
-    socket.on("slide", function(data) {
+    socket.on("admin-slide", function(data) {
       if (!(data.id != null)) {
         return;
       }

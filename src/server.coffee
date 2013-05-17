@@ -72,7 +72,7 @@ io.sockets.on "connection", (socket) ->
         # join the room
         socket.join data.channel
 
-    socket.on "slide", (data) ->
+    socket.on "admin-slide", (data) ->
         if not data.id?
             return
 
