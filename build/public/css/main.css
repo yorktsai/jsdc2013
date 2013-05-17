@@ -13,9 +13,10 @@ pre code {
 
 #slides-div {
     font-size: 36px;
-    min-height:350px;
+    min-height:300px;
     height:auto !important;
-    height:350px; 
+    height:300px; 
+    padding-bottom: 60px;
 }
 
 #slides-div h1 {
