@@ -1,14 +1,31 @@
 body {
-    font: 1em 'Helvetica Neue', 'Microsoft JhengHei', 'Microsoft YaHei', "Lucida Grande", "Lucida Sans Unicode",  sans-serif;
+    font: 0.9em 'Helvetica Neue', 'Microsoft JhengHei', 'Microsoft YaHei', "Lucida Grande", "Lucida Sans Unicode",  sans-serif;
 	padding-top: 10px;
 	padding-left: 10px;
 }
 
+pre code {
+	font-size: 28px;
+	line-height: 36px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
 #slides-div {
-    font-size: 48px;
-    min-height:500px;
+    font-size: 36px;
+    min-height:350px;
     height:auto !important;
-    height:500px; 
+    height:350px; 
+}
+
+#slides-div h1 {
+	font-size: 48px;
+	line-height: 56px;
+}
+
+#slides-div li {
+	margin-top: 30px;
+	line-height: 36px;
 }
 
 #chat-div {

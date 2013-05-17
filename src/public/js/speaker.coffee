@@ -68,6 +68,12 @@ class ChatView extends Backbone.View
 
 scrollLock = false
 $(document).ready(() ->
+    # hljs
+    hljs.initHighlightingOnLoad()
+    $('pre code').each((i, e) ->
+        hljs.highlightBlock(e)
+    )
+
     # views
     slideModel = new SlideModel()
     slideView = new SlideView({

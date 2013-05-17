@@ -10,3 +10,4 @@ exports.config = (app, dirname) ->
     app.use '/lib', express.static(dirname + '/public/lib')
     app.use '/js', express.static(dirname + '/public/js')
     app.use '/css', express.static(dirname + '/public/css')
+    app.use '/image', express.static(dirname + '/public/image')

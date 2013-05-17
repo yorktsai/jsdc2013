@@ -7,6 +7,7 @@
         <title>JSDC 2013 - Real-Time Web Application with Node.js, Socket.io, and Redis - York Tsai@EZTABLE</title>
 
         <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="/lib/highlight.js/styles/default.css" rel="stylesheet" type="text/css" />
         <link href="/css/main.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -14,31 +15,158 @@
             <div id="slides-div">
                 <div class="row-fluid slide">
                     <div class="span12">
-                        Slide 1
+                        <h1 style="margin-top:80px;">Real-time Web Application with Socket.IO, Node.js, and Redis</h1>
+                        <h2 style="margin-top:40px;">York Tsai, JSDC 2013</h2>
+                        <h3 style="margin-top:40px;">Who am I?</h3>
+                        <ul style="margin-top:20px;">
+                            <li><a href="http://www.linkedin.com/pub/york-tsai/13/bb/8a8" target="_blank">Linkedin</a></li>
+                            <li><a href="https://twitter.com/yorktsai" target="_blank">Twitter</a></li>
+                            <li><a href="https://www.facebook.com/yorktsai" target="_blank">Facebook</a></li>
+                        </ul>
+                        <h3 style="margin-top:40px;">I currently work at</h3>
+                        <div><a href="http://www.eztable.com/" target="_blank">EZTABLE</a></div>
                     </div>
                 </div>
 
                 <div class="row-fluid slide">
                     <div class="span12">
-                        Slide 2
+                        <h1 style="margin-top:80px;">Never Live DEMO!!</h1>
+                        <h1><a href="http://york.tw/jsdc2013" target="_blank">http://york.tw/jsdc2013</a></h1>
+                        <div style="margin-top:80px;">I hope this work on my (and yours) computer ...</div>
                     </div>
                 </div>
 
                 <div class="row-fluid slide">
                     <div class="span12">
-                        Slide 3
+                        <h1>In This DEMO</h1>
+                        <a href="http://socket.io/" target="_blank"><img src="/image/socket.io.logo.jpg" /></a><br />
+                        <a href="http://http://nodejs.org/" target="_blank"><img src="/image/node.js.logo.png" /></a><br />
+                        <a href="http://redis.io/" target="_blank"><img src="/image/redis.logo.png" /></a><br />
                     </div>
                 </div>
 
                 <div class="row-fluid slide">
                     <div class="span12">
-                        Slide 4
+                        <h1>You may Have Heard About</h1>
+                        <ul style="margin-top:20px;">
+                            <li>Forever Iframe</li>
+                            <li>XMLHttpRequest Long Polling</li>
+                            <li>Cometd</li>
+                        </ul>
+                        <div style="margin-top:30px;">
+                            <a href="http://en.wikipedia.org/wiki/Comet_(programming)" target="_blank">http://en.wikipedia.org/wiki/Comet_(programming)</a>
+                        </div>
+
+                        <h1 style="margin-top:60px;color:red;">TL;DR</h1>
                     </div>
                 </div>
 
                 <div class="row-fluid slide">
                     <div class="span12">
-                        Slide 5
+                        <h1>Socket.IO</h1>
+                        <ul style="margin-top:20px;">
+                            <li>Cross browser (including IE 6)</li>
+                            <li>Real-time and bi-directional persistent connection (WebSocket)</li>
+                            <li>(Almost) No learning curve</li>
+                            <li>Open source</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>Start a Server</h1>
+                        <pre><code class="coffeescript">
+express = require("express")
+app = express()
+server = require("http").createServer(app)
+io = require("socket.io").listen(server)
+
+server.listen 80
+                        </code></pre>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>Sending and Receiving Events</h1>
+                        <h2>Client</h2>
+                        <pre><code class="coffeescript">
+socket = io.connect("http://localhost")
+socket.on "event_X", (data) ->
+    # data is {hello: "world"}
+    socket.emit "event_Y",
+        my: "data"
+                        </code></pre>
+                        <h2>Server</h2>
+                        <pre><code class="coffeescript">
+io.sockets.on "connection", (socket) ->
+    socket.emit "event_X",
+        hello: "world"
+
+    socket.on "event_Y", (data) ->
+        # will get {my: "data"}
+                        </code></pre>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1 style="margin-top:120px;">That's All</h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>SOCKET.IO</h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>SOCKET.IO</h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>SOCKET.IO</h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>SOCKET.IO</h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>SOCKET.IO</h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>SOCKET.IO</h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>SOCKET.IO</h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>SOCKET.IO</h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>SOCKET.IO</h1>
                     </div>
                 </div>
             </div>
@@ -47,7 +175,7 @@
 
             <div class="row-fluid">
                 <div class="span12">
-                    <a href="http://york.tw/jsdc2013" target="_blank">http://york.tw/jsdc2013</a>
+                    <h3><a href="http://york.tw/jsdc2013" target="_blank">http://york.tw/jsdc2013</a></h3>
                 </div>
             </div>
 
@@ -84,6 +212,7 @@
         <script src="/lib/mustache.js"></script>
         <script src="/lib/socket.io.js"></script>
         <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/lib/highlight.js/highlight.pack.js"></script>
 
         <script src="/js/config.js"></script>
         <script src="/js/speaker.js"></script>

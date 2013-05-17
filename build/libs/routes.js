@@ -13,7 +13,8 @@
     });
     app.use('/lib', express["static"](dirname + '/public/lib'));
     app.use('/js', express["static"](dirname + '/public/js'));
-    return app.use('/css', express["static"](dirname + '/public/css'));
+    app.use('/css', express["static"](dirname + '/public/css'));
+    return app.use('/image', express["static"](dirname + '/public/image'));
   };
 
 }).call(this);

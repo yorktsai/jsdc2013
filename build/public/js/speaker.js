@@ -129,6 +129,10 @@
 
   $(document).ready(function() {
     var chatModel, chatView, slideModel, slideView, socket;
+    hljs.initHighlightingOnLoad();
+    $('pre code').each(function(i, e) {
+      return hljs.highlightBlock(e);
+    });
     slideModel = new SlideModel();
     slideView = new SlideView({
       model: slideModel
