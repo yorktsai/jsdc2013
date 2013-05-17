@@ -98,7 +98,7 @@ io.sockets.on "connection", (socket) ->
         # add to list
         redisPublishClient.rpush config.redis.msgList, JSON.stringify(data), (err, res) ->
             # pub
-            data.id = index
+            data.id = res
             data.ts = moment.unix(data.ts).format('HH:mm:ss YYYY-MM-DD')
             redisPublishClient.publish config.redis.channel, JSON.stringify({
                 channel: 'chat'

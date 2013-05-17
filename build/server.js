@@ -92,7 +92,7 @@
       data.ts = moment().unix();
       console.log('[chat] ' + JSON.stringify(data));
       return redisPublishClient.rpush(config.redis.msgList, JSON.stringify(data), function(err, res) {
-        data.id = index;
+        data.id = res;
         data.ts = moment.unix(data.ts).format('HH:mm:ss YYYY-MM-DD');
         return redisPublishClient.publish(config.redis.channel, JSON.stringify({
           channel: 'chat',

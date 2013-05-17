@@ -93,10 +93,15 @@
     };
 
     ChatView.prototype.onFormSubmit = function() {
-      var form;
+      var form, msg;
       form = this.$el.find('form');
+      msg = form.find('input[name="msg"]').val();
+      form.find('input[name="msg"]').val('');
+      if (msg.length <= 0) {
+        return false;
+      }
       this.socket.emit("chat", {
-        msg: form.find('input[name="msg"]').val()
+        msg: msg
       });
       return false;
     };
