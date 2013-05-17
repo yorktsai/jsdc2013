@@ -1,0 +1,16 @@
+body {
+    font: 1em 'Helvetica Neue', 'Microsoft JhengHei', 'Microsoft YaHei', "Lucida Grande", "Lucida Sans Unicode",  sans-serif;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+#slides-div {
+    font-size: 48px;
+    min-height:500px;
+    height:auto !important;
+    height:500px; 
+}
+
+#chat-div {
+    font-size: 18px;
+}

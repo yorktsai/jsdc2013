@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>JSDC 2013 - Real-Time Web Application with Node.js, Socket.io, and Redis - York Tsai@EZTABLE</title>
+
+        <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="/css/main.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div id="slides-div">
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        Slide 1
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        Slide 1
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row-fluid" id="chat-div">
+                <div class="span12">
+                    chats
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row-fluid">
+                <div class="span12">
+                    <div id="status"></div>
+                </div>
+            </div>
+        </div>
+
+        <script id="template-messages" type="template/mustache">
+            {{#messages}}
+                <tr style="background-color:{{bgcolor}};">
+                    <td>{{message}}</td>
+                </tr>
+            {{/messages}}
+        </script>
+        
+        <script src="/lib/jquery-1.9.1.min.js"></script>
+        <script src="/lib/underscore-1.4.4.min.js"></script>
+        <script src="/lib/backbone-1.0.0.min.js"></script>
+        <script src="/lib/mustache.js"></script>
+        <script src="/lib/socket.io.js"></script>
+        <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+
+        <script src="/js/config.js"></script>
+        <script src="/js/client.js"></script>
+    </body>
+</html>

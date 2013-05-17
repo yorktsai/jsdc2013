@@ -1,0 +1,27 @@
+{
+  "name": "opboard",
+  "version": "1.0.0",
+  "author": "York Tsai <york.tw@gmail.com>",
+  "description": "operation dashboard",
+  "contributors": [ 
+    {
+      "name": "York Tsai",
+      "email": "york.tw@gmail.com"
+    } 
+  ],
+  "scripts": {
+    "start": "node ./build/server.js"
+  },
+  "dependencies" : {
+    "backbone"   :  "1.0.x",
+    "express"   :  "3.1.x",
+    "redis" :  "0.8.x",
+    "socket.io" :  "0.9.x",
+    "underscore"    :  "1.4.x",
+    "coffee-script"    :  "1.4.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10"
+  }
+}
