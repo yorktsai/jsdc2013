@@ -40,13 +40,20 @@
       return socket.join(data.channel);
     });
     socket.on("slide", function(data) {
+      if (!(data.id != null)) {
+        return;
+      }
+      console.log('[slide] ' + data);
       return redisPublishClient.publish(config.redis.channel, JSON.stringify({
         channel: 'slide',
         data: data
       }));
     });
     return socket.on("chat", function(data) {
-      console.log('[chat] ' + data.msg);
+      if (!(data.msg != null)) {
+        return;
+      }
+      console.log('[chat] ' + data);
       return redisPublishClient.publish(config.redis.channel, JSON.stringify({
         channel: 'chat',
         data: data
@@ -59,22 +66,27 @@
   });
 
   redisClient.on("message", function(channel, message) {
-    var data;
+    var data, dataToPub;
     data = JSON.parse(message);
     if (!(data.channel != null)) {
       return;
     }
+    dataToPub = void 0;
     if (data.channel === 'chat') {
       if (!(data.data.msg != null)) {
         return;
       }
+      dataToPub = [data.data];
     } else if (data.channel === 'slide') {
       if (!(data.data.id != null)) {
         return;
       }
       slideBuffer = data.data;
+      dataToPub = data.data;
     }
-    return io.sockets["in"](data.channel).emit(data.channel, data.data);
+    if (dataToPub != null) {
+      return io.sockets["in"](data.channel).emit(data.channel, dataToPub);
+    }
   });
 
 }).call(this);

@@ -20,6 +20,36 @@ class SlideView extends Backbone.View
         $('#slides-div .slide:visible').hide()
         $('#slides-div .slide:eq(' + id + ')').show()
 
+class ChatModel extends Backbone.Model
+
+class ChatView extends Backbone.View
+    el: $('#chat-div')
+
+    events: {
+        'submit form': 'onFormSubmit'
+    }
+
+    initialize: () ->
+        # model
+        @model.on 'change', @render
+        @model.view = @
+
+    render: () =>
+        msgs = @model.get("msgs")
+
+        template = $('#template-msgs').html()
+        html = Mustache.render(template, {
+            msgs: msgs
+        })
+
+        @$el.find(".msgs").prepend(html)
+
+    onFormSubmit: () ->
+        form = @$el.find('form')
+        @socket.emit "chat",
+            msg: form.find('input[name="msg"]').val()
+
+        return false
 
 $(document).ready(() ->
     # views
@@ -33,8 +63,14 @@ $(document).ready(() ->
         id: 0
     })
 
+    chatModel = new ChatModel()
+    chatView = new ChatView({
+        model: chatModel
+    })
+
     # socket io
     socket = io.connect("http://" + config.serverHost + ":" + config.port)
+    chatView.socket = socket
 
     socket.on "connect", (data) ->
         setStatus "connected"
@@ -51,6 +87,12 @@ $(document).ready(() ->
         numSlides = $('#slides-div .slide').length
         if data.id? and data.id < numSlides and data.id >= 0
             slideModel.set(data)
+
+    socket.on "chat", (data) ->
+        chatModel.set({
+            msgs: data
+            random: Math.random()
+        })
 
     # bind slide events
     $(document).keydown((event) ->

@@ -44,13 +44,24 @@ io.sockets.on "connection", (socket) ->
         socket.join data.channel
 
     socket.on "slide", (data) ->
+        if not data.id?
+            return
+
+        console.log('[slide] ' + data);
+
         redisPublishClient.publish config.redis.channel, JSON.stringify({
             channel: 'slide'
             data: data
         })
 
     socket.on "chat", (data) ->
-        console.log('[chat] ' + data.msg);
+        if not data.msg?
+            return
+
+        console.log('[chat] ' + data);
+
+        # TODO bg color and id
+
         redisPublishClient.publish config.redis.channel, JSON.stringify({
             channel: 'chat'
             data: data
@@ -67,6 +78,8 @@ redisClient.on "message", (channel, message) ->
         # invalid message
         return
 
+    dataToPub = undefined
+
     # cache message
     if data.channel is 'chat'
         # check format
@@ -74,13 +87,17 @@ redisClient.on "message", (channel, message) ->
             return
 
         # TODO: buffer
+
+        dataToPub = [data.data]
     else if data.channel is 'slide'
         # check format
         if not data.data.id?
             return
 
         slideBuffer = data.data
+        dataToPub = data.data
 
     # broadcast message
-    io.sockets.in(data.channel).emit(data.channel, data.data);
+    if dataToPub?
+        io.sockets.in(data.channel).emit(data.channel, dataToPub);
 

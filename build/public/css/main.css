@@ -14,3 +14,7 @@ body {
 #chat-div {
     font-size: 18px;
 }
+
+#chat-div .msgs div {
+	padding-bottom: 12px;
+}

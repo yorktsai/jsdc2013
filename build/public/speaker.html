@@ -47,7 +47,16 @@
 
             <div class="row-fluid" id="chat-div">
                 <div class="span12">
-                    chats
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <form class="form-inline">
+                                <input type="text" name="msg" class="input-xxlarge" placeholder="message">
+                                <input type="submit" class="btn" value="Send"/>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="msgs"></div>
                 </div>
             </div>
 
@@ -60,12 +69,12 @@
             </div>
         </div>
 
-        <script id="template-messages" type="template/mustache">
-            {{#messages}}
-                <tr style="background-color:{{bgcolor}};">
-                    <td>{{message}}</td>
-                </tr>
-            {{/messages}}
+        <script id="template-msgs" type="template/mustache">
+            {{#msgs}}
+                <div style="background-color:{{bgcolor}};" data-id="{{id}}">
+                    {{msg}}
+                </div>
+            {{/msgs}}
         </script>
         
         <script src="/lib/jquery-1.9.1.min.js"></script>
