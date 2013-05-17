@@ -47,10 +47,9 @@ io.sockets.on "connection", (socket) ->
                 endIndex = res
                 startIndex = Math.max(endIndex - n, 0)
 
-                console.log(startIndex)
-
                 redisPublishClient.lrange config.redis.msgList, startIndex, endIndex, (err, res) ->
                     counter = 0
+                    dataToPub = []
                     for json in res
                         data = JSON.parse(json)
                         data.id = startIndex + counter
@@ -60,18 +59,14 @@ io.sockets.on "connection", (socket) ->
 
                         counter++
 
-                        redisPublishClient.publish config.redis.channel, JSON.stringify({
-                            channel: 'chat'
-                            data: data
-                        })
+                        dataToPub.unshift(data)
+
+                    socket.emit "chat", dataToPub
 
         else if data.channel is 'slide'
             # send recent slide to client
             if slideBuffer?
                 socket.emit data.channel, slideBuffer
-        else
-            # invalid channel
-            return
 
         # join the room
         socket.join data.channel
@@ -104,7 +99,30 @@ io.sockets.on "connection", (socket) ->
                 channel: 'chat'
                 data: data
             })
+
+    socket.on "chat-append", (data) ->
+        if not data.id?
+            return
         
+        n = 10
+        endIndex = data.id
+        startIndex = Math.max(endIndex - n, 0)
+
+        redisPublishClient.lrange config.redis.msgList, startIndex, endIndex, (err, res) ->
+            counter = 0
+            dataToPub = []
+            for json in res
+                data = JSON.parse(json)
+                data.id = startIndex + counter
+
+                if data.ts?
+                    data.ts = moment.unix(data.ts).format('HH:mm:ss YYYY-MM-DD')
+
+                counter++
+                dataToPub.unshift(data)
+
+            socket.emit "chat-append", dataToPub
+
 # setup redis clients
 redisClient.on "ready", ->
     redisClient.subscribe config.redis.channel
@@ -123,8 +141,6 @@ redisClient.on "message", (channel, message) ->
         # check format
         if not data.data.msg?
             return
-
-        # TODO: buffer
 
         dataToPub = [data.data]
     else if data.channel is 'slide'

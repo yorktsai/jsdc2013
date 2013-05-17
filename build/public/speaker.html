@@ -71,13 +71,11 @@
             </div>
         </div>
 
-        <script id="template-msgs" type="template/mustache">
-            {{#msgs}}
-                <div class=".msg" style="background-color:#F5F5F5;" data-id="{{id}}">
-                    <u>Anonymous</u> ({{ts}}):<br />
-                    <div style="margin-left:10px;">{{msg}}</div>
-                </div>
-            {{/msgs}}
+        <script id="template-msg" type="template/mustache">
+            <div class="msg" style="background-color:#F5F5F5;" data-id="{{id}}">
+                <u>Anonymous</u> ({{ts}}):<br />
+                <div style="margin-left:10px;">{{msg}}</div>
+            </div>
         </script>
         
         <script src="/lib/jquery-1.9.1.min.js"></script>

@@ -45,11 +45,10 @@
           var endIndex, startIndex;
           endIndex = res;
           startIndex = Math.max(endIndex - n, 0);
-          console.log(startIndex);
           return redisPublishClient.lrange(config.redis.msgList, startIndex, endIndex, function(err, res) {
-            var counter, json, _i, _len, _results;
+            var counter, dataToPub, json, _i, _len;
             counter = 0;
-            _results = [];
+            dataToPub = [];
             for (_i = 0, _len = res.length; _i < _len; _i++) {
               json = res[_i];
               data = JSON.parse(json);
@@ -58,20 +57,15 @@
                 data.ts = moment.unix(data.ts).format('HH:mm:ss YYYY-MM-DD');
               }
               counter++;
-              _results.push(redisPublishClient.publish(config.redis.channel, JSON.stringify({
-                channel: 'chat',
-                data: data
-              })));
+              dataToPub.unshift(data);
             }
-            return _results;
+            return socket.emit("chat", dataToPub);
           });
         });
       } else if (data.channel === 'slide') {
         if (slideBuffer != null) {
           socket.emit(data.channel, slideBuffer);
         }
-      } else {
-        return;
       }
       return socket.join(data.channel);
     });
@@ -85,7 +79,7 @@
         data: data
       }));
     });
-    return socket.on("chat", function(data) {
+    socket.on("chat", function(data) {
       if (!(data.msg != null)) {
         return;
       }
@@ -98,6 +92,31 @@
           channel: 'chat',
           data: data
         }));
+      });
+    });
+    return socket.on("chat-append", function(data) {
+      var endIndex, n, startIndex;
+      if (!(data.id != null)) {
+        return;
+      }
+      n = 10;
+      endIndex = data.id;
+      startIndex = Math.max(endIndex - n, 0);
+      return redisPublishClient.lrange(config.redis.msgList, startIndex, endIndex, function(err, res) {
+        var counter, dataToPub, json, _i, _len;
+        counter = 0;
+        dataToPub = [];
+        for (_i = 0, _len = res.length; _i < _len; _i++) {
+          json = res[_i];
+          data = JSON.parse(json);
+          data.id = startIndex + counter;
+          if (data.ts != null) {
+            data.ts = moment.unix(data.ts).format('HH:mm:ss YYYY-MM-DD');
+          }
+          counter++;
+          dataToPub.unshift(data);
+        }
+        return socket.emit("chat-append", dataToPub);
       });
     });
   });

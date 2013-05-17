@@ -35,16 +35,24 @@ class ChatView extends Backbone.View
         @model.view = @
 
     render: () =>
+        msgsDiv = @$el.find(".msgs")
         msgs = @model.get("msgs")
 
-        # TODO: decorate msgs
+        template = $('#template-msg').html()
 
-        template = $('#template-msgs').html()
-        html = Mustache.render(template, {
-            msgs: msgs
-        })
-
-        @$el.find(".msgs").prepend(html)
+        if not @model.get('append')
+            msgs.reverse()
+            $.each(msgs, (idx, msg) ->
+                if msgsDiv.find('.msg[data-id="' + msg.id+ '"]').length <= 0
+                    html = Mustache.render(template, msg)
+                    msgsDiv.prepend(html)
+            )
+        else
+            $.each(msgs, (idx, msg) ->
+                if msgsDiv.find('.msg[data-id="' + msg.id+ '"]').length <= 0
+                    html = Mustache.render(template, msg)
+                    msgsDiv.append(html)
+            )
 
     onFormSubmit: () ->
         form = @$el.find('form')
@@ -58,6 +66,7 @@ class ChatView extends Backbone.View
 
         return false
 
+scrollLock = false
 $(document).ready(() ->
     # views
     slideModel = new SlideModel()
@@ -99,7 +108,16 @@ $(document).ready(() ->
         chatModel.set({
             msgs: data
             random: Math.random()
+            append: false
         })
+
+    socket.on "chat-append", (data) ->
+        chatModel.set({
+            msgs: data
+            random: Math.random()
+            append: true
+        })
+        scrollLock = false
 
     # bind slide events
     $(document).keydown((event) ->
@@ -119,5 +137,17 @@ $(document).ready(() ->
                     channel: 'slide'
                     id: id
     )
+
+    # scroll
+    $(document).bind "scroll", ->
+        if not scrollLock and $(document).height() - $(window).scrollTop() - $(window).height() < 300
+            lastMsg = $('#chat-div .msg:last')
+            if lastMsg.length > 0
+                scrollLock = true
+                id = lastMsg.data("id") - 1
+
+                if id > 0
+                    socket.emit "chat-append",
+                        id: lastMsg.data("id")
 )
 
