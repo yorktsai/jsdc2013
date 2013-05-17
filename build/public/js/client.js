@@ -145,7 +145,7 @@
     chatView = new ChatView({
       model: chatModel
     });
-    socket = io.connect("http://" + config.serverHost + ":" + config.port);
+    socket = io.connect("http://" + location.hostname + ":" + config.port);
     chatView.socket = socket;
     socket.on("connect", function(data) {
       setStatus("connected");

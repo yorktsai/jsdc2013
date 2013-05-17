@@ -91,7 +91,7 @@ $(document).ready(() ->
     })
 
     # socket io
-    socket = io.connect("http://" + config.serverHost + ":" + config.port)
+    socket = io.connect("http://" + location.hostname + ":" + config.port)
     chatView.socket = socket
 
     socket.on "connect", (data) ->
