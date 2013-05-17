@@ -15,6 +15,7 @@ server.listen config.port
 
 # message buffer
 slideBuffer = undefined
+isPrizeWon = false
 
 # redis clients
 redisClient = redis.createClient(config.redis.port, config.redis.host)
@@ -122,6 +123,11 @@ io.sockets.on "connection", (socket) ->
                 dataToPub.unshift(data)
 
             socket.emit "chat-append", dataToPub
+
+    socket.on "prize", (data) ->
+        if not isPrizeWon
+            isPrizeWon = true
+            socket.broadcast.emit "prize", data
 
 # setup redis clients
 redisClient.on "ready", ->

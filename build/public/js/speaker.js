@@ -181,6 +181,9 @@
       });
       return scrollLock = false;
     });
+    socket.on("prize", function(data) {
+      return $('#prize-div').text(data);
+    });
     $(document).keydown(function(event) {
       var diff, id, numSlides;
       diff = 0;

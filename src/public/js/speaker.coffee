@@ -125,6 +125,9 @@ $(document).ready(() ->
         })
         scrollLock = false
 
+    socket.on "prize", (data) ->
+        $('#prize-div').text(data)
+
     # bind slide events
     $(document).keydown((event) ->
         diff = 0

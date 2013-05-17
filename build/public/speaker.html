@@ -131,7 +131,7 @@ socket.on "event_X", (data) ->
                         <h1>Broadcasting</h1>
                         <pre><code class="coffeescript">
 io.sockets.on "connection", (socket) ->
-    socket.broadcast.emit "a new user connected"
+    socket.broadcast.emit "myevent" "a new user connected"
                         </code></pre>
                     </div>
                 </div>
@@ -180,7 +180,28 @@ myAppClient = io.connect("http://localhost/my_app")
                 <div class="row-fluid slide">
                     <div class="span12">
                         <h1 style="margin-top:120px; font-size:72px;">
+                            Get old data for new connections?
+                        </h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>Data Persistence</h1>
+                        <ul style="margin-top:20px;">
+                            <li>Need a persistence layer.</li>
+                            <li>Get old data from the persistence layer for new connections.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1 style="margin-top:120px; font-size:72px;">
                             Integration
+                        </h1>
+                        <h1 style="margin-top:120px;">
+                            I have component X,Y,Z want to send/receive data from user's browser
                         </h1>
                     </div>
                 </div>
@@ -229,7 +250,7 @@ myAppClient = io.connect("http://localhost/my_app")
 
                 <div class="row-fluid slide">
                     <div class="span12">
-                        <h1>Only 24 connections</h1>
+                        <h1>Two Connections per Server</h1>
                         <img style="margin-top:50px;" src="/image/node_redis.png" />
                     </div>
                 </div>
@@ -254,6 +275,16 @@ redisSubClient.on "message", (channel, data) ->
 
                 <div class="row-fluid slide">
                     <div class="span12">
+                        <h1>Redis-backed pub/sub</h1>
+                        <ul style="margin-top:20px;">
+                            <li>Two clients required: one for pub, one for sub</li>
+                            <li>Use one channel, add metadata to your message</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
                         <h1 style="margin-top:120px; font-size:72px;">
                             Frequently Asked Questions
                         </h1>
@@ -268,6 +299,15 @@ redisSubClient.on "message", (channel, data) ->
                         <h1 style="margin-top:30px; color:red; font-size:72px;">
                             Yes!
                         </h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>SSL</h1>
+                        <pre><code class="coffeescript">
+io.connect('https://localhost', {secure: true})
+                        </code></pre>
                     </div>
                 </div>
 
@@ -319,7 +359,7 @@ redisSubClient.on "message", (channel, data) ->
 
                 <div class="row-fluid slide">
                     <div class="span12">
-                        <h1 style="margin-top:120px;">
+                        <h1 style="margin-top:120px;" id="prize-div">
                             Put your name here and win $1,000 EZTABLE VIP Voucher!
                         </h1>
                     </div>
@@ -333,18 +373,6 @@ redisSubClient.on "message", (channel, data) ->
                         <h1 style="margin-top:30px;">
                             <a href="https://github.com/yorktsai/jsdc2013" target="_blank">https://github.com/yorktsai/jsdc2013</a>
                         </h1>
-                    </div>
-                </div>
-
-                <div class="row-fluid slide">
-                    <div class="span12">
-                        <h1>SOCKET.IO</h1>
-                    </div>
-                </div>
-
-                <div class="row-fluid slide">
-                    <div class="span12">
-                        <h1>SOCKET.IO</h1>
                     </div>
                 </div>
             </div>
