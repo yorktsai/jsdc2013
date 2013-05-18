@@ -142,7 +142,7 @@ $(document).ready(() ->
             id = slideModel.get('id')
             id = id + diff
             if id < numSlides and id >= 0
-                socket.emit 'admin-slide'
+                socket.emit 'admin-slide',
                     channel: 'slide'
                     id: id
     )
