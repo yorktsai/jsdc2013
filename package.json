@@ -1,8 +1,8 @@
 {
-  "name": "opboard",
+  "name": "jsdc2013",
   "version": "1.0.0",
   "author": "York Tsai <york.tw@gmail.com>",
-  "description": "operation dashboard",
+  "description": "Real-time Web Application with Socket.io, Node.js, and Redis",
   "contributors": [ 
     {
       "name": "York Tsai",
