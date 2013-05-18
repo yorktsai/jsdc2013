@@ -11,3 +11,8 @@ npm start
 ```
 
 http://localhost:3939/
+
+Edit
+```
+coffee -o build -cw src
+```

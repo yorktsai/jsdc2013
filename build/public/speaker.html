@@ -429,6 +429,7 @@ server {
                     <div class="span12">
                         <h1>Configuration</h1>
                         <ul style="margin-top:20px;">
+                            <li>store, default is MemoryStore, single process only</li>
                             <li>transports (default: websocket, htmlfile, xhr-polling, jsonp-polling)</li>
                             <li>authorization (default: false)</li>
                         </ul>
@@ -437,7 +438,7 @@ server {
 
                 <div class="row-fluid slide">
                     <div class="span12">
-                        <h1>Configuration</h1>
+                        <h1>Configuration - transports</h1>
                         <pre><code class="coffeescript">
 io.configure "production", ->
     io.enable "browser client etag"
@@ -470,8 +471,16 @@ NODE_ENV=production node app.js
 
                 <div class="row-fluid slide">
                     <div class="span12">
+                        <h1 style="margin-top:120px; font-size:72px; color:red;">
+                            Never trust data from frontend!
+                        </h1>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
                         <h1 style="margin-top:120px; font-size:72px;">
-                            We are hiring!
+                            Join Us!
                         </h1>
                         <h1 style="margin-top:30px;">
                             <a href="http://www.eztable.com/careers.php" target="_blank">www.eztable.com/careers.php</a>
@@ -479,7 +488,41 @@ NODE_ENV=production node app.js
                     </div>
                 </div>
 
-                <!-- TODO: Add some photos -->
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <img src="//cdn-jsdc-static.york.tw/image/hack_everything.jpg" />
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>Culture</h1>
+                        <ul style="margin-top:20px;">
+                            <li>Flexible working hours</li>
+                            <li>No PM, Product Owner MUST code/design</li>
+                            <li>Data-driven customer development</li>
+                            <li>SCRUM</li>
+                            <li>Pretty girls!</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <h1>Every Month you got</h1>
+                        <ul style="margin-top:20px;">
+                            <li>1 extra holiday</li>
+                            <li>1 work away day</li>
+                            <li>1 hack day</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row-fluid slide">
+                    <div class="span12">
+                        <img src="//cdn-jsdc-static.york.tw/image/hackday-food.jpg" />
+                    </div>
+                </div>
 
                 <div class="row-fluid slide">
                     <div class="span12">
