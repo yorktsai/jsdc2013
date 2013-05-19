@@ -156,7 +156,7 @@
       try {
         if (!isPrizeWon) {
           isPrizeWon = true;
-          return socket.broadcast.emit("prize", data);
+          return socket.broadcast.emit("prize", JSON.stringify(data));
         }
       } catch (_error) {
         err = _error;

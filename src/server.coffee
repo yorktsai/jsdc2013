@@ -140,7 +140,7 @@ io.sockets.on "connection", (socket) ->
         try
             if not isPrizeWon
                 isPrizeWon = true
-                socket.broadcast.emit "prize", data
+                socket.broadcast.emit "prize", JSON.stringify(data)
         catch err
             console.trace()
 
