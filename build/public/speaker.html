@@ -44,7 +44,7 @@
                     <div class="span12">
                         <h1>In This DEMO</h1>
                         <a href="http://socket.io/" target="_blank"><img src="//cdn-jsdc-static.york.tw/image/socket.io.logo.jpg" /></a><br />
-                        <a href="http://http://nodejs.org/" target="_blank"><img src="//cdn-jsdc-static.york.tw/image/node.js.logo.png" /></a><br />
+                        <a href="http://nodejs.org/" target="_blank"><img src="//cdn-jsdc-static.york.tw/image/node.js.logo.png" /></a><br />
                         <a href="http://redis.io/" target="_blank"><img src="//cdn-jsdc-static.york.tw/image/redis.logo.png" /></a><br />
                     </div>
                 </div>
@@ -293,7 +293,7 @@ myAppClient = io.connect("http://localhost/my_app")
                         <h1>Redis-backed Pub/Sub</h1>
                         <pre><code class="coffeescript">
 redisSubClient.on "ready", ->
-    redisClient.subscribe redisChannel
+    redisSubClient.subscribe redisChannel
 
 redisSubClient.on "message", (channel, data) ->
     data = JSON.parse(data)
