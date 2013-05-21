@@ -23,7 +23,10 @@ Done. Connect to
 
 http://localhost:3939/
 
-To edit to code.
+To edit the code
 ```
 coffee -o build -cw src
 ```
+
+Chat log from the DEMO:
+https://gist.github.com/yorktsai/5619195
